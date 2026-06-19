@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1A1A2E,100:F99E1A&height=190&section=header&text=Win-Rate%20Overlay&fontColor=FFFFFF&fontSize=60&fontAlignY=40&desc=an%20Overwatch%20teammate%20HUD&descSize=18&descAlignY=62&animation=fadeIn" width="100%" alt="Overwatch Win-Rate Overlay" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1A1A2E,100:F99E1A&height=190&section=header&text=Win-Rate%20Overlay&fontColor=FFFFFF&fontSize=60&fontAlignY=40&desc=an%20Overwatch%20teammate%20HUD&descSize=18&descAlignY=62&animation=fadeIn" width="100%" alt="Overwatch Overlay / Stats Application" />
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Rajdhani&weight=600&size=26&duration=3500&pause=900&color=F99E1A&center=true&vCenter=true&width=520&height=48&lines=We+all+like+to+be+nosey" alt="We all like to be nosy" /></a>
 
