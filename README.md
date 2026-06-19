@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:05080D,100:4DD2E6&height=190&section=header&text=Win-Rate%20Overlay&fontColor=F0F4F8&fontSize=60&fontAlignY=40&desc=an%20Overwatch%20teammate%20HUD&descSize=18&descAlignY=62&animation=fadeIn" width="100%" alt="Overwatch Win-Rate Overlay" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1A1A2E,100:F99E1A&height=190&section=header&text=Win-Rate%20Overlay&fontColor=FFFFFF&fontSize=60&fontAlignY=40&desc=an%20Overwatch%20teammate%20HUD&descSize=18&descAlignY=62&animation=fadeIn" width="100%" alt="Overwatch Win-Rate Overlay" />
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Rajdhani&weight=600&size=24&duration=3200&pause=700&color=4DD2E6&center=true&vCenter=true&width=620&height=48&lines=Know+your+team+before+you+lock+in;Most-played+hero%2C+live+win+rate;Re-themed+from+the+ult-charge+ring" alt="Know your team before you lock in - most-played hero, live win rate - re-themed from the ult-charge ring" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Rajdhani&weight=600&size=26&duration=3500&pause=900&color=F99E1A&center=true&vCenter=true&width=520&height=48&lines=We+all+like+to+be+nosey" alt="We all like to be nosey" /></a>
 
 <br/>
 
-<img src="https://img.shields.io/badge/Python-3.11+-4DD2E6?style=for-the-badge&logo=python&logoColor=white&labelColor=0E1626" alt="Python 3.11+" />
-<img src="https://img.shields.io/badge/PySide6-Qt_for_Python-6FD23A?style=for-the-badge&logo=qt&logoColor=white&labelColor=0E1626" alt="PySide6" />
-<img src="https://img.shields.io/badge/OverFast_API-no_key_needed-36C8E0?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=0E1626" alt="OverFast API, no key needed" />
-<img src="https://img.shields.io/badge/Windows-click--through_HUD-4DD2E6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0E1626" alt="Windows click-through HUD" />
+<img src="https://img.shields.io/badge/Python-3.11+-F99E1A?style=for-the-badge&logo=python&logoColor=white&labelColor=1A1A2E" alt="Python 3.11+" />
+<img src="https://img.shields.io/badge/PySide6-Qt_for_Python-F99E1A?style=for-the-badge&logo=qt&logoColor=white&labelColor=1A1A2E" alt="PySide6" />
+<img src="https://img.shields.io/badge/OverFast_API-no_key_needed-F99E1A?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=1A1A2E" alt="OverFast API, no key needed" />
+<img src="https://img.shields.io/badge/Windows-click--through_HUD-F99E1A?style=for-the-badge&logo=windows&logoColor=white&labelColor=1A1A2E" alt="Windows click-through HUD" />
 
 <br/><br/>
 
@@ -198,7 +198,7 @@ Edit `config.json` (copied from `config.example.json`):
 ## How it works
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#0E1626','primaryTextColor':'#F0F4F8','primaryBorderColor':'#4DD2E6','lineColor':'#36C8E0','secondaryColor':'#05080D','tertiaryColor':'#0B1220','fontFamily':'Segoe UI'}}}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1A1A2E','primaryTextColor':'#FFFFFF','primaryBorderColor':'#F99E1A','lineColor':'#F99E1A','secondaryColor':'#1A1A2E','tertiaryColor':'#4D4E53','fontFamily':'Segoe UI'}}}%%
 flowchart LR
     CFG["config.json<br/>tracked BattleTags"] --> WK["refresh worker<br/>(QThread)"]
     WK -->|"async fetch"| API["OverFast API"]
@@ -282,7 +282,7 @@ basis/font/anchor/hotkeys). Tracked next steps (see `ISSUES.md`):
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:4DD2E6,100:6FD23A&height=110&section=footer" width="100%" alt="" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:F99E1A,100:1A1A2E&height=110&section=footer" width="100%" alt="" />
 
 <sub><b>Track current <code>DESIGN.md</code> · re-skin by editing one file · made for the spawn room.</b></sub>
 
