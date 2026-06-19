@@ -1,10 +1,15 @@
 {
   "battletags": [
-    "Krusher#9999",
-    "Awkward#2616",
-    "TimTheTatman#1432"
+    "Nebula434#1747",
+    "jjstansloona#1267",
+    "mjmeows#1475"
   ],
+  "owner": "Nebula434#1747",
   "refresh_interval_seconds": 60,
-  "anchor": "top-right",
-  "gamemode": "competitive"
+  "anchor": "top-left",
+  "winrate_basis": "combined",
+  "font_family": null,
+  "toggle_hotkey": "<ctrl>+<alt>+o",
+  "quit_hotkey": "<ctrl>+<alt>+q",
+  "config_hotkey": "<ctrl>+<alt>+c"
 }

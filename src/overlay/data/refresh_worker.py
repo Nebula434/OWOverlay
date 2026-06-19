@@ -1,16 +1,19 @@
-"""Off-thread fetch worker.
+"""Off-thread fetch workers.
 
-A ``RefreshWorker`` lives on a dedicated ``QThread``. Its ``refresh`` slot is
+Both workers live on a dedicated ``QThread`` and expose a ``refresh`` slot
 triggered (via a queued connection) once on startup and again on every timer
-tick. It fetches each tracked teammate sequentially and emits ``player_updated``
-per result so cards update incrementally, then emits ``cycle_finished``. All
-network I/O therefore happens off the UI thread.
+tick, so all network I/O happens off the UI thread:
+
+- ``RefreshWorker`` fetches each tracked teammate and emits ``player_updated``
+  per result so the overlay cards update incrementally, then ``cycle_finished``.
+- ``ProfileWorker`` fetches the owner's own profile (overall stats + top-3
+  heroes) for the game-closed stats view and emits ``profile_updated``.
 """
 from __future__ import annotations
 
 from PySide6.QtCore import QObject, Signal, Slot
 
-from .models import PlayerStats
+from .models import PlayerStats, ProfileStats
 from .stats_service import StatsService
 
 
@@ -25,6 +28,11 @@ class RefreshWorker(QObject):
         self._service = service
         self._battletags = list(battletags)
 
+    @Slot(object)
+    def set_battletags(self, battletags: list[str]) -> None:
+        """Replace the tracked list (queued from the UI thread on reload)."""
+        self._battletags = list(battletags)
+
     @Slot()
     def refresh(self) -> None:
         """Fetch all tracked players; emit one signal per player, then finish."""
@@ -32,3 +40,27 @@ class RefreshWorker(QObject):
             stats: PlayerStats = self._service.fetch_player_stats(battletag)
             self.player_updated.emit(stats)
         self.cycle_finished.emit()
+
+
+class ProfileWorker(QObject):
+    """Fetches the owner's own profile for the game-closed stats view."""
+
+    profile_updated = Signal(object)
+
+    def __init__(self, service: StatsService, owner: str) -> None:
+        super().__init__()
+        self._service = service
+        self._owner = owner
+
+    @Slot(object)
+    def set_owner(self, owner: str) -> None:
+        """Replace the owner BattleTag (queued from the UI thread on reload)."""
+        self._owner = owner
+
+    @Slot()
+    def refresh(self) -> None:
+        """Fetch the owner profile and emit it, unless no owner is configured."""
+        if not self._owner:
+            return
+        profile: ProfileStats = self._service.fetch_profile_stats(self._owner)
+        self.profile_updated.emit(profile)

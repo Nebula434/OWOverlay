@@ -1,9 +1,10 @@
-"""A single teammate card: hero icon, win-rate ring, and stacked labels.
+"""A single teammate card: hero shield icon, win-rate ring, and stacked labels.
 
-The card owns the panel background, the three horizontal elements, and the
-logic that maps a :class:`PlayerStats` into what each child shows for every
-card state (loading / ok / private-or-not-found / network error). All visual
-values come from :mod:`overlay.ui.theme`.
+The card owns the rounded navy panel (with its cyan left accent bar and border),
+the three vertically-centred row elements, and the logic that maps a
+:class:`PlayerStats` into what each child shows for every card state (loading /
+ok / private-or-not-found / network error). All visual values come from
+:mod:`overlay.ui.theme`.
 """
 from __future__ import annotations
 
@@ -17,12 +18,13 @@ from .hero_icon import HeroIcon
 from .winrate_ring import WinRateRing
 
 _HALF_DIVISOR = 2.0
+_LAYOUT_ZERO = 0
 
 # Status strings shown on the secondary label per card state.
-_TEXT_LOADING = "Loading…"
+_TEXT_LOADING = "Loading\u2026"
 _TEXT_PRIVATE = "Private / not found"
 _TEXT_NETWORK = "Network error"
-_TEXT_NO_DATA = "No competitive data"
+_TEXT_NO_DATA = "No data"
 # Fallback glyphs for the hero icon when no portrait applies.
 _GLYPH_PRIVATE = "?"
 _GLYPH_NETWORK = "!"
@@ -67,6 +69,7 @@ class PlayerCard(QWidget):
         super().__init__(parent)
         self.battletag = battletag
         self.setFixedSize(theme.CARD_WIDTH_PX, theme.CARD_HEIGHT_PX)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
 
         self._icon = HeroIcon(self)
         self._ring = WinRateRing(self)
@@ -84,13 +87,14 @@ class PlayerCard(QWidget):
 
     def _build_layout(self) -> None:
         labels = QWidget(self)
-        labels.setMinimumWidth(theme.LABEL_AREA_MIN_WIDTH_PX)
+        labels.setFixedSize(theme.LABEL_AREA_WIDTH_PX, theme.LABEL_AREA_HEIGHT_PX)
+        labels.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
         labels_layout = QVBoxLayout(labels)
-        labels_layout.setContentsMargins(0, 0, 0, 0)
-        labels_layout.setSpacing(0)
-        labels_layout.addStretch()
+        labels_layout.setContentsMargins(_LAYOUT_ZERO, _LAYOUT_ZERO, _LAYOUT_ZERO, _LAYOUT_ZERO)
+        labels_layout.setSpacing(theme.LABEL_LINE_SPACING_PX)
+        # Top-aligned so the area's spare height leaves room for extra metric
+        # lines later (DESIGN.md → Card spec).
         labels_layout.addWidget(self._name_label)
-        labels_layout.addSpacing(theme.LABEL_LINE_SPACING_PX)
         labels_layout.addWidget(self._sub_label)
         labels_layout.addStretch()
 
@@ -102,9 +106,10 @@ class PlayerCard(QWidget):
             theme.CARD_PADDING_PX,
         )
         row.setSpacing(theme.CARD_ELEMENT_GAP_PX)
-        row.addWidget(self._icon, 0, Qt.AlignmentFlag.AlignVCenter)
-        row.addWidget(self._ring, 0, Qt.AlignmentFlag.AlignVCenter)
-        row.addWidget(labels, 1)
+        row.addWidget(self._icon, _LAYOUT_ZERO, Qt.AlignmentFlag.AlignVCenter)
+        row.addWidget(self._ring, _LAYOUT_ZERO, Qt.AlignmentFlag.AlignVCenter)
+        row.addWidget(labels, _LAYOUT_ZERO, Qt.AlignmentFlag.AlignVCenter)
+        row.addStretch()
 
     def update_stats(self, stats: PlayerStats) -> None:
         """Apply a resolved ``PlayerStats`` to every child widget."""
@@ -152,9 +157,26 @@ class PlayerCard(QWidget):
         path.addRoundedRect(
             panel_rect, theme.CARD_CORNER_RADIUS_PX, theme.CARD_CORNER_RADIUS_PX
         )
+
         painter.fillPath(path, theme.qcolor(theme.COLOR_CARD_BG, theme.COLOR_CARD_BG_ALPHA))
-        pen = QPen(theme.qcolor(theme.COLOR_CARD_BORDER))
+        self._paint_accent_bar(painter, path, panel_rect)
+
+        pen = QPen(theme.qcolor(theme.COLOR_CARD_BORDER, theme.COLOR_CARD_BORDER_ALPHA))
         pen.setWidthF(theme.CARD_BORDER_WIDTH_PX)
         painter.setPen(pen)
         painter.setBrush(Qt.BrushStyle.NoBrush)
         painter.drawPath(path)
+
+    def _paint_accent_bar(
+        self, painter: QPainter, panel_path: QPainterPath, panel_rect: QRectF
+    ) -> None:
+        painter.save()
+        painter.setClipPath(panel_path)
+        accent_rect = QRectF(
+            panel_rect.left(),
+            panel_rect.top(),
+            theme.CARD_ACCENT_WIDTH_PX,
+            panel_rect.height(),
+        )
+        painter.fillRect(accent_rect, theme.qcolor(theme.COLOR_CARD_ACCENT))
+        painter.restore()
